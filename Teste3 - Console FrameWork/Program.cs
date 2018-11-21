@@ -182,6 +182,7 @@ namespace Teste3___Console_FrameWork
                 //foreach (IWebElement link in links)
                 //{
 
+                driver.FindElements(By.TagName("a"));
 
                 //    //link.Text.
                 //    var numDoc = link.Text;
@@ -209,10 +210,10 @@ namespace Teste3___Console_FrameWork
 
                 //}
 
-                //links.ElementAt(links.Count() - 1).Click();
+                driver.FindElements(By.TagName("a")).LastOrDefault().Click();
 
-                driver.Navigate().Back();
-                                             
+                //driver.Navigate().Back();
+
                 //IWebElement pesquisa2 = driver.FindElement(By.LinkText());
 
                 //pesquisa2.SendKeys(OpenQA.Selenium.Keys.Enter);
