@@ -23,12 +23,15 @@ namespace Teste3___Console_FrameWork
         static void Main(string[] args)
         {
 
+            Console.WriteLine("Digite o CNPJ");
+            string cnpj = Console.ReadLine();
 
+            Console.WriteLine("Digite a senha");
+            string senha = Console.ReadLine();
 
             Console.WriteLine("Digite a competência");
             DateTime comp = DateTime.Parse(Console.ReadLine());
-
-
+            
             var driver = new ChromeDriver();
 
             driver.Navigate().GoToUrl("http://gps.receita.fazenda.gov.br/");
@@ -44,9 +47,14 @@ namespace Teste3___Console_FrameWork
 
             IWebElement ele_comp = driver.FindElement(By.Name("formInicio:competencia"));
 
-            ele_cnpj.SendKeys("43368422000127");
-            ele_senha.SendKeys("43368422");
+            IWebElement cpt = driver.FindElement(By.Name("captcha_campo_resposta"));
+
+        
+
+            ele_cnpj.SendKeys(cnpj);
+            ele_senha.SendKeys(senha);
             ele_comp.SendKeys(comp.Month.ToString("00") + comp.Year.ToString("0000"));
+            cpt.SendKeys("");
 
             System.Threading.Thread.Sleep(10000);
 
@@ -152,12 +160,15 @@ namespace Teste3___Console_FrameWork
 
                     string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "aux.html";
 
+                    string path2 = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\GPS";
+                                       
+                    Directory.CreateDirectory(path2);
+                    
                     //Console.Write(path);
 
                     //Path.Combine(path, @"\aux.html");
-
-
-                    File.WriteAllText(path, driver.PageSource, UnicodeEncoding.UTF8);
+                    
+                    File.WriteAllText(path, driver.PageSource ,  UnicodeEncoding.UTF8);
 
                     //string html = File.ReadAllText(@"C:\Users\A36372\Desktop\teste.htm");
 
@@ -172,9 +183,8 @@ namespace Teste3___Console_FrameWork
                     
                     //htmlToPdf.GeneratePdf(driver.PageSource, null , @"C:\Users\Everton Silvestre\Desktop\" + numDoc+".pdf");
 
-                    htmlToPdf.GeneratePdfFromFile(path, null, @"C:\Users\Everton Silvestre\Desktop\Teste\" + contador.ToString("00") + comp.Year + "_" + numDoc + ".pdf");
-
-
+                    htmlToPdf.GeneratePdfFromFile(path, null, Path.GetFullPath(path2) + "\\" + contador.ToString("00") + comp.Year + "_" + numDoc + ".pdf");
+                    
                     driver.Navigate().Back();                     
                     //System.Threading.Thread.Sleep(1000);
                 }
@@ -198,7 +208,7 @@ namespace Teste3___Console_FrameWork
                 //foreach (var tag in driver.FindElements(By.ClassName("coluna19")).Where(x => x.Text != "").Where(x => !x.Text.Contains("/")).Where(x => !x.Text.Contains(",")))
                 //{
                 //    //lista.Add(int.Parse(tag.Text));
-                //    //Console.Write(tag.Text);
+                //    //Console.Write(tag.Text)
 
 
                 //}
