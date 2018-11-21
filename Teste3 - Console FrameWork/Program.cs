@@ -34,7 +34,7 @@ namespace Teste3___Console_FrameWork
             driver.Navigate().GoToUrl("http://gps.receita.fazenda.gov.br/");
 
 
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
 
             IWebElement element = driver.FindElement(By.Name("formInicio:botaoConsultar"));
 
@@ -44,8 +44,8 @@ namespace Teste3___Console_FrameWork
 
             IWebElement ele_comp = driver.FindElement(By.Name("formInicio:competencia"));
 
-            ele_cnpj.SendKeys("76101989000191");
-            ele_senha.SendKeys("76101989");
+            ele_cnpj.SendKeys("43368422000127");
+            ele_senha.SendKeys("43368422");
             ele_comp.SendKeys(comp.Month.ToString("00") + comp.Year.ToString("0000"));
 
             System.Threading.Thread.Sleep(10000);
@@ -82,7 +82,7 @@ namespace Teste3___Console_FrameWork
             while (contador > 0)
             {
 
-                System.Threading.Thread.Sleep(2000);
+                //System.Threading.Thread.Sleep(2000);
 
                 IWebElement pesquisa = driver.FindElement(By.LinkText(contador.ToString("00") +"/"+ comp.Year.ToString("0000")));
 
@@ -150,7 +150,14 @@ namespace Teste3___Console_FrameWork
 
                     //string html = driver.PageSource.Trim();
 
-                    File.WriteAllText(@"C:\Users\A36372\Desktop\teste.html", driver.PageSource, UnicodeEncoding.UTF8);
+                    string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "aux.html";
+
+                    //Console.Write(path);
+
+                    //Path.Combine(path, @"\aux.html");
+
+
+                    File.WriteAllText(path, driver.PageSource, UnicodeEncoding.UTF8);
 
                     //string html = File.ReadAllText(@"C:\Users\A36372\Desktop\teste.htm");
 
@@ -159,31 +166,23 @@ namespace Teste3___Console_FrameWork
                     //pdf.Save("C:/Users/A36372/Desktop/document.pdf");
 
 
-                    String html = File.ReadAllText(@"C:\Users\A36372\Desktop\teste.html", UnicodeEncoding.UTF8);
+                    String html = File.ReadAllText(path, UnicodeEncoding.UTF8);
+
                     var htmlToPdf = new NReco.PdfGenerator.HtmlToPdfConverter();
                     
-                    htmlToPdf.GeneratePdf(html, null, @"C:\Users\A36372\Desktop\"+ numDoc+".pdf");
+                    //htmlToPdf.GeneratePdf(driver.PageSource, null , @"C:\Users\Everton Silvestre\Desktop\" + numDoc+".pdf");
 
+                    htmlToPdf.GeneratePdfFromFile(path, null, @"C:\Users\Everton Silvestre\Desktop\Teste\" + contador.ToString("00") + comp.Year + "_" + numDoc + ".pdf");
 
 
                     driver.Navigate().Back();                     
                     //System.Threading.Thread.Sleep(1000);
-
-
-
-
                 }
-
-
-               
-
-
-               
 
                 //foreach (IWebElement link in links)
                 //{
 
-                    
+
                 //    //link.Text.
                 //    var numDoc = link.Text;
                 //    link.Click();
@@ -199,7 +198,7 @@ namespace Teste3___Console_FrameWork
                 //{
                 //    //lista.Add(int.Parse(tag.Text));
                 //    //Console.Write(tag.Text);
-                   
+
 
                 //}
 
@@ -207,8 +206,10 @@ namespace Teste3___Console_FrameWork
                 //{
                 //    Screenshot image = driver.GetScreenshot();
                 //    image.SaveAsFile("C:/Users/A36372/Desktop/Screenshot" + contador.ToString("00") + comp.Year.ToString("0000") + ".png", ScreenshotImageFormat.Png);
-                    
+
                 //}
+
+                //links.ElementAt(links.Count() - 1).Click();
 
                 driver.Navigate().Back();
                                              
